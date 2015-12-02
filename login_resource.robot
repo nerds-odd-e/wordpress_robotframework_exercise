@@ -23,9 +23,5 @@ login with username "${username}" and password "${password}"
 login successfully
     Page Should Contain     Dashboard
 
-Remove user
-    Close Browser
-    Run    shanchuyonghu ${USERNAME}
-
 login fail with message "${message}"
     Page Should Contain    ${message}
