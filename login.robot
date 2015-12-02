@@ -1,28 +1,28 @@
 *** Settings ***
 Resource    login_resource.robot
 
-Test setup       Create user
-Test Teardown    Remove user
+Test setup       There is a user "bill" and his password is "s3cr3t"
+Test Teardown    Kill bill
 
 *** Test Cases ***
 Valid Login
-    When login with username "jack" and password "s3cr3t"
+    When login with username "bill" and password "s3cr3t"
     Then login successfully
 
 Login fail    [Template]    Invalid Login
-    jack   ${EMPTY}             ERROR: The password field is empty.
-    jack   invalid_password     ERROR: The password you entered for the username jack is incorrect.
+    bill   ${EMPTY}             ERROR: The password field is empty.
+    bill   invalid_password     ERROR: The password you entered for the username bill is incorrect.
     invalid_user  any_passwd    ERROR: Invalid username.
     ${EMPTY}    any_password    ERROR: The username field is empty.
 
 *** Keywords ***
-Create user
-    Open Browser    ${EMPTY}
-    there is a user "jack" and his password is "s3cr3t"
+There is a user "${username}" and his password is "${password}"
+    Open Browser   ${EMPTY}
+    Create user    ${username}     "${password}"
 
-Remove user
+Kill bill
     Close Browser
-    Run    shanchuyonghu ${USERNAME}
+    Remove user
 
 Invalid Login
     [Arguments]    ${username}    ${password}    ${message}

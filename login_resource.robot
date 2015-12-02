@@ -6,9 +6,13 @@ Library           OperatingSystem
 ${USERNAME}   ${EMPTY}
 
 *** Keywords ***
-there is a user "${username}" and his password is "${password}"
+Create user
+    [Arguments]    ${username}    ${password}
     Set Test Variable    ${USERNAME}     ${username}
     Run    tianjiayonghu ${username} editor ${password}
+
+Remove user
+    Run    shanchuyonghu ${USERNAME}
 
 login with username "${username}" and password "${password}"
     Go to            http://127.0.0.1:9000/wp-login.php
