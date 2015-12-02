@@ -12,6 +12,7 @@ Valid Login
 Login fail    [Template]    Invalid Login
     jack   ${EMPTY}             ERROR: The password field is empty.
     jack   invalid_password     ERROR: The password you entered for the username jack is incorrect.
+    invalid_user  any_passwd    ERROR: Invalid username.
 
 *** Keywords ***
 Create user
