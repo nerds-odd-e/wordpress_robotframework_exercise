@@ -14,6 +14,11 @@ Login with invalid password
     When login with username "jack" and password "invalid_password"
     Then login fail with message "ERROR: The password you entered for the username jack is incorrect."
 
+Login with empty password
+    Given there is a user "jack" and his password is "s3cr3t"
+    When login with username "jack" and password ""
+    Then login fail with message "ERROR: The password field is empty."
+
 *** Keywords ***
 Remove user
     Close Browser
