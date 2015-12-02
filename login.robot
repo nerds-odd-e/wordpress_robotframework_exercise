@@ -1,11 +1,36 @@
 *** Settings ***
-Resource          resource.robot
+Library           Selenium2Library
+Library           OperatingSystem
+
+Test Teardown     Remove user
+
+*** Variables ***
+${USERNAME}   ${EMPTY}
 
 *** Test Cases ***
 Valid Login
-    Open Browser To Login Page
-    Input Username    tom
-    Input Password    s3cr3t
-    Submit Credentials
-    Welcome Page Should Be Open
-    [Teardown]    Close Browser
+    Given there is a user "jack" and his password is "s3cr3t"
+    When login with username "jack" and password "s3cr3t"
+    Then login successfully
+
+*** Keywords ***
+there is a user "${username}" and his password is "${password}"
+    Set Test Variable    ${USERNAME}     ${username}
+    Create user          ${USERNAME}     ${password}
+
+Create user
+    [Arguments]    ${username}    ${password}
+    Run    tianjiayonghu ${username} editor ${password}
+
+login with username "${username}" and password "${password}"
+    Open Browser     http://127.0.0.1:9000/wp-login.php
+    Input Text       user_login    ${username}
+    Input Text       user_pass     ${password}
+    Click Button     Log In
+
+login successfully
+    Page Should Contain     Dashboard
+
+Remove user
+    Close Browser
+    Run    shanchuyonghu ${USERNAME}
